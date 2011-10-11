@@ -16,8 +16,8 @@ juju-log "Adding ppa"
 #apt-add-repository ppa:canonical-sig/thirdparty
 juju-log "updating cache"
 curl -s http://archive.cloudera.com/debian/archive.key | sudo apt-key add -
-apt-get update
-apt-cache search hadoop
+sudo apt-get update
+sudo apt-cache search hadoop
 
 # only necessary on oneiric but shouldn't break anything elsewhere
 HOSTNAME=`hostname -f`
