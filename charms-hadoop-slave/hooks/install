@@ -10,14 +10,14 @@ export TERM=linux
 
 #RELEASE_CODE=`lsb_release -a | awk '/Codename/ { print $2 }'`
 
-# Add the Hadoop PPA
+#Add the Hadoop PPA
 juju-log "Adding ppa"
 #apt-add-repository ppa:mark-mims/hadoop
 #apt-add-repository ppa:canonical-sig/thirdparty
+sudo add-apt-repository "deb http://archive.cloudera.com/debian lucid-cdh3 contrib"
+sudo wget -O - http://archive.cloudera.com/debian/archive.key | sudo apt-key add -
 juju-log "updating cache"
-curl -s http://archive.cloudera.com/debian/archive.key | sudo apt-key add -
 sudo apt-get update
-sudo apt-cache search hadoop
 
 # only necessary on oneiric but shouldn't break anything elsewhere
 HOSTNAME=`hostname -f`
@@ -27,7 +27,7 @@ sed -i "s/127.0.1.1\(.*${HOSTNAME}.*\)/${IP_ADDRESS}\1/" /etc/hosts
 
 # Install the packages
 juju-log "installing packages"
-DEBIAN_FRONTEND=noninteractive apt-get install -y hadoop-0.20-datanode hadoop-0.20-tasktracker
+DEBIAN_FRONTEND=noninteractive sudo apt-get install -y hadoop-0.20-datanode hadoop-0.20-tasktracker
 
 # Open the necessary ports
 if [ -x /usr/bin/open-port ];then
